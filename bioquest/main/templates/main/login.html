@@ -1,0 +1,18 @@
+{% extends "main/shablon.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+<div class="col">
+    <h1>Вход</h1>
+    <p>
+        Некоторые страницы доступны только зарегистрированным пользователям. <a href="{% url 'signup' %}">Зарегистрируйтесь</a>, если еще не сделали этого
+    </p>
+    <div class="col-sm-2">
+    <form action="." method="post">
+        Имя пользователя:<br>{{ form.username }} <br><br>
+        Пароль:<br>{{ form.password }}<br><br>
+        {% csrf_token %}
+        <p><input type="submit" value="Войти" class="btn btn-primary"></p>
+    </form>
+    </div>
+</div>
+{% endblock %}

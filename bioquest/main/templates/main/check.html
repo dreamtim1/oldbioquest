@@ -1,0 +1,224 @@
+{% extends 'main/shablon.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="col">
+
+  <div class="alert alert-primary">
+      {% if f %}
+      {% if label %}
+      Все вопросы по разделу "{{tag}}" кончились. Возможно, есть вопросы из других частей. Можете порешать другие вопросы в личном кабинете :)
+      {% else %}
+      Кажется, вы решили все вопросы. Возможно, есть вопросы из других частей. Вау! Может, поможете добавлять вопросы в базу? :)
+      {% endif %}
+      {% endif %}
+
+    {% for el in questions %}
+            <h3>{{ el.stage }} {{ el.year }} {{ el.grade }}</h3>
+            <h5>{{ el.part }}-{{ el.number }}</h5>
+            <p>{{ el.text|linebreaksbr }}</p>
+            <p>
+                Раздел:
+                {% for tag in el.tags.all %}
+                <a href="{{ tag.get_absolute_url }}">{{tag.name}}</a>
+                {% endfor %}
+                <br>
+                Темы:{% for x in el.Tag1.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag2.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag3.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag4.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag5.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag6.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag7.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag8.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag9.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag10.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag11.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+            </p>
+            {% if el.image %}
+                <div class="col-md-8">
+                <img src="{{ el.image.url }}" class="img-fluid" alt="Responsive image">
+                </div>
+            {% endif %}
+                <p>
+
+
+  </div>
+  {% if not next %}
+    {% if partn and not auto1 and not auto2 %}
+    <form class="form">
+        <input type="hidden" name="part" value="{{chpart}}">
+        <input type="hidden" name="stage" value="{{stage}}">
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="answer"></textarea>
+        {% if not next %}
+        <br><button type="submit" class="btn btn-primary">Ответить</button>
+        {% endif %}
+    </form>
+    {% endif %}
+
+    {% if part1 or auto1 %}
+  <form class="form-inline d-flex justify-content-left md-form form-sm mt-0">
+
+      <input type="hidden" name="part" value="{{chpart}}">
+      <input type="hidden" name="stage" value="{{stage}}">
+
+  <!--div class="form-check form-check-inline ffield ffield-radio"-->
+
+  <div class="form-check-inline ffield ffield-radio">
+  <input class="form-check-input" type="radio" name="answer" id="inlineRadio1" value="а">
+  <label class="form-check-label" for="inlineRadio1">а</label>
+  </div>
+
+  <div class="form-check-inline ffield ffield-radio">
+  <input class="form-check-input" type="radio" name="answer" id="inlineRadio2" value="б">
+  <label class="form-check-label" for="inlineRadio2">б</label>
+  </div>
+
+  <div class="form-check-inline ffield ffield-radio">
+  <input class="form-check-input" type="radio" name="answer" id="inlineRadio3" value="в">
+  <label class="form-check-label" for="inlineRadio3">в</label>
+  </div>
+
+  <div class="form-check-inline ffield ffield-radio">
+  <input class="form-check-input" type="radio" name="answer" id="inlineRadio4" value="г">
+  <label class="form-check-label" for="inlineRadio4">г</label>
+  </div>
+   {% if not next %}
+   <button type="submit" class="btn btn-primary" value"?part={{chpart}}&stage={{ stage }}">Ответить</button>
+    {% endif %}
+
+   </form>
+{% endif %}
+
+{% if part2 or auto2 %}
+<form>
+    <input type="hidden" name="part" value="{{chpart}}">
+
+    <div class="form-check form-check-inline ffield">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="а" name="answer1">
+      <label class="form-check-label" for="inlineCheckbox1">а</label>
+    </div>
+
+    <div class="form-check form-check-inline ffield">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="б" name="answer2">
+      <label class="form-check-label" for="inlineCheckbox2">б</label>
+    </div>
+
+    <div class="form-check form-check-inline ffield">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="в" name="answer3">
+      <label class="form-check-label" for="inlineCheckbox3">в</label>
+    </div>
+
+    <div class="form-check form-check-inline ffield">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="г" name="answer4">
+      <label class="form-check-label" for="inlineCheckbox4">г</label>
+    </div>
+
+    <div class="form-check form-check-inline ffield">
+      <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="д" name="answer5">
+      <label class="form-check-label" for="inlineCheckbox5">д</label>
+    </div>
+
+    {% if not next %}
+   <button type="submit" class="btn btn-primary">Ответить</button>
+    {% endif %}
+</form>
+{% endif %}
+{% endif %}
+
+</div>
+
+{% if next %}
+
+{% if not partn or not vseros%}
+
+<div class="col">
+  <h6><font color="{{ color }}">Ваш ответ: {{ user_answer }}. {{ result }}<br>{{ right_answer }}<br>{{ right_answer_label }}</font></h6>
+
+                {% if el.comment %}
+                <p>
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#y{{ el.id }}" aria-expanded="false" aria-controls="y{{ el.id }}">
+                    Показать разбор
+                  </button>
+                </p>
+                <div class="collapse" id="y{{ el.id }}">
+                  <div class="card card-body">
+                     {{ el.comment }}<br><br>
+                     {% if el.imageA %}
+                        <div class="col-md-8">
+                        <img src="{{ el.imageA.url }}" class="rounded mx-auto d-block" >
+                        </div>
+                     {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+    <br>
+        {% if label_next %}
+        <a class="btn btn-primary" href="{{ tag.get_absolute_url }}solve?part={{ chpart }}&stage={{ stage }}" role="button">Следующий вопрос в теме</a>
+        {% else %}
+        <a class="btn btn-primary" href="{% url 'check' %}?part={{ chpart }}&stage={{ stage }}" role="button">Следующий вопрос</a>
+        {% endif %}
+        <br><br><br>
+</div>
+
+
+{% else %}
+
+<div class="col">
+    <h6>Результаты автоматической проверки: {{stupid_sum}} / {{stupid_max}}</h6>
+
+    <h6>
+        Ответы
+        <br>
+        <table width="50%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="left" width="100">Ваши: </td>
+                {% for ans in result_list %}
+                <td align="left" width="100"><font color = "{{ ans.1 }}"> {{ ans.0 }} </font></td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td align="left" width="100">Верные:</td>
+                {% for r in right_list %}
+                <td align="left" width="100">{{ r }} </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </h6>
+
+                {% if el.comment %}
+                  <p>
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#y{{ el.id }}" aria-expanded="false" aria-controls="y{{ el.id }}">
+                    Показать разбор
+                  </button>
+                </p>
+                <div class="collapse" id="y{{ el.id }}">
+                  <div class="card card-body">
+                     {{ el.comment }}<br><br>
+                     {% if el.imageA %}
+                        <div class="col-md-8">
+                        <img src="{{ el.imageA.url }}" class="rounded mx-auto d-block" >
+                        </div>
+                     {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+    <br>
+        {% if label_next %}
+        <a class="btn btn-primary" href="{{ tag.get_absolute_url }}solve?part={{ chpart }}&stage={{ stage }}">Следующий вопрос в разделе</a>
+        {% else %}
+        <a class="btn btn-primary" href="{% url 'check' %}?part={{ chpart }}&stage={{ stage }}">Следующий вопрос</a>
+        {% endif %}
+        <br><br><br>
+
+</div>
+
+{% endif %}
+
+{% endif %}
+{% endfor %}
+
+{% endblock %}

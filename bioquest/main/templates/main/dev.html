@@ -1,0 +1,123 @@
+{% extends 'main/shablon.html' %}
+
+{% block title %}
+Участвовать
+{% endblock %}
+
+{% block content %}
+<div class="col">
+    <h1>Раздел для тех, кто хочет добавлять вопросы в базу</h1>
+    <p>В форме ниже вы можете отправлять вопросы в базу данных. <b>Ознакомьтесь с короткой <a href='{% url 'instructions' %}'>инструкцией</a>, прежде чем работать!</b> Кроме заданий муцниципального (МЭ), регионального (РЭ) и заключительного (ЗЭ) этапов ВсОШ можно добавлять задания заключительных этапов перечневых олимпиад, тогда введите название олимпиады в поле "этап": Ломоносов, ПВГ, СПбГУ, Высшая проба, ВсеСиб, ТурЛом и другие (вводите именно так), также можно добавлять опросы международной олимпиады по биологии (IBO). Не вводите название, если добавляеете вопрос ВсОШ.</p>
+<form method="post" enctype="multipart/form-data" >
+
+    {% csrf_token %}
+
+    <div class="form-group row">
+        <label for="year" class="col-sm-1 col-form-label">Год:</label>
+        <div class="col-sm-2">
+            {{ form.year }}
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <label for="grade" class="col-sm-1 col-form-label">Класс:</label>
+        <div class="col-sm-2">
+            {{ form.grade }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Этап:</label>
+                <div class="col-sm-3">
+                    {{ form.stage }}
+                </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Часть:</label>
+        <div class="col-sm-1">
+            {{ form.part }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Номер:</label>
+                <div class="col-sm-2">
+                     {{ form.number }}
+                </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Текст вопроса:</label>
+                <div class="col-sm-10">
+                    {{ form.text }}
+                </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Ответ:</label>
+                <div class="col-sm-10">
+                    {{ form.answer }}
+                </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Разбор, пояснения, что и как ботать:</label>
+                <div class="col-sm-10">
+                    {{ form.comment }}
+                </div>
+    </div>
+
+    <div class="form-group">
+        <label for="img">Иллюстрация к вопросу:</label><br>
+        {{ form.image }}
+    </div>
+
+    <div class="form-group">
+        <label for="imageA">Иллюстрация к разбору:</label><br>
+        {{ form.imageA }}
+    </div>
+
+    <h2>Разделы и темы:</h2>
+
+    <div class="form-group row" id="tag0">
+                    <div class="form-check tags">
+                        {{ form.tags.0 }}<br>
+                        {{ form.tags.1 }}<br>
+                        {{ form.tags.2 }}<br>
+                        {{ form.tags.3 }}<br>
+                        {{ form.tags.4 }}<br>
+                        {{ form.tags.5 }}<br>
+                        {{ form.tags.6 }}<br>
+                        {{ form.tags.7 }}<br>
+                        {{ form.tags.8 }}<br>
+                        {{ form.tags.9 }}<br>
+                        {{ form.tags.10 }}<br>
+                        {{ form.tags.11 }}<br>
+                    </div>
+
+            <div class="form-group topic tags vis"><h3>Блок 1</h3>{{ form.Tag1 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 2</h3>{{ form.Tag2 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 3</h3>{{ form.Tag3 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 4</h3>{{ form.Tag4 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 5</h3>{{ form.Tag5 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 6</h3>{{ form.Tag6 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 7</h3>{{ form.Tag7 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 8</h3>{{ form.Tag8 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 9</h3>{{ form.Tag9 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 10</h3>{{ form.Tag10 }}</div>
+            <div class="form-group topic tags vis"><h3>Блок 11</h3>{{ form.Tag11 }}</div>
+
+    </div>
+
+
+    <p class="clearfix"><button type="submit" class="btn btn-primary mb-2">Отправить</button></p>
+    <span>{{ error }}</span>
+
+
+</form>
+
+</div>
+
+{% endblock %}

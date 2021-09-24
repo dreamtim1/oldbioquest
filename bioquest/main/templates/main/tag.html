@@ -1,0 +1,65 @@
+{% extends 'main/shablon.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="col">
+    <h2>Все вопросы по разделу "{{tag}}"</h2>
+    <div class="alert alert-primary">
+    {%for el in tag.qs.all%}
+            <h3>{{ el.stage }} {{ el.year }} {{ el.grade }}</h3>
+            <h5>{{ el.part }}-{{ el.number }}</h5>
+            <p>{{ el.text|linebreaksbr }}</p>
+            <p>
+                Темы:{% for x in el.Tag1.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag2.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag3.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag4.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag5.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag6.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag7.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag8.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag9.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag10.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.Tag11.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+            </p>
+            {% if el.image %}
+                <img src="{{ el.image.url }}" class="img-fluid img-in-test" alt="Responsive image">
+            {% endif %}
+                <p>
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target='#x{{ el.id }}' aria-expanded="false" aria-controls='x{{ el.id }}'>
+                    Показать ответ
+                  </button>
+                </p>
+                <div class="collapse" id='x{{ el.id }}'>
+                  <div class="card card-body">
+                     {{ el.answer }}
+                  </div>
+                </div>
+
+                {% if el.comment %}
+                <p>
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#y{{ el.id }}" aria-expanded="false" aria-controls="y{{ el.id }}">
+                    Показать разбор
+                  </button>
+                </p>
+                <div class="collapse" id="y{{ el.id }}">
+                  <div class="card card-body">
+                     {{ el.comment |urlize }}<br>
+                     {% if el.imageA %}
+                        <img src="{{ el.imageA.url }}" class="rounded mx-auto d-block" >
+                     {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+
+
+
+            <br>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}
+

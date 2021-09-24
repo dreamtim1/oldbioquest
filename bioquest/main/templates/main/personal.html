@@ -1,0 +1,161 @@
+{% extends 'main/shablon.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block content %}
+<div class="col">
+    <h2>Добро пожаловать, {{ profile }}!</h2>
+    <b><a href="{% url 'check' %}?part={{ part }}&stage={{ stage }}">Решать разные вопросы</a></b
+</div>
+<div class="col">
+
+    <h3>Выбрать часть ВсОШ: </h3>
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if part == 'n' %} active{% endif %}"><a class="page-link" href="?part=n&page={{ show_solved.number }}&stage={{ stage }}">Любая</a></li>
+    <li class="page-item {% if part == '1' %} active{% endif %}"><a class="page-link" href="?part=1&page={{ show_solved.number }}&stage={{ stage }}">1 (1/4)</a></li>
+    <li class="page-item {% if part == '2' %} active{% endif %}"><a class="page-link" href="?part=2&page={{ show_solved.number }}&stage={{ stage }}">2 (0-5/5)</a></li>
+    <li class="page-item {% if part == 'others' %} active{% endif %}"><a class="page-link" href="?part=others&page={{ show_solved.number }}&stage={{ stage }}">Другие части</a></li>
+  </ul>
+</nav>
+
+    <h3>Выбрать этап: </h3>
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item {% if stage == 'all' %} active{% endif %}"><a class="page-link" href="?stage=all&page={{ show_solved.number }}&part={{ part }}">Любой</a></li>
+    <li class="page-item {% if stage == 'vs' %} active{% endif %}"><a class="page-link" href="?stage=vs&page={{ show_solved.number }}&part={{ part }}">Любой этап ВсОШ</a></li>
+    <li class="page-item {% if stage == 'МЭ' %} active{% endif %}"><a class="page-link" href="?stage=МЭ&page={{ show_solved.number }}&part={{ part }}">МЭ</a></li>
+    <li class="page-item {% if stage == 'РЭ' %} active{% endif %}"><a class="page-link" href="?stage=РЭ&page={{ show_solved.number }}&part={{ part }}">РЭ</a></li>
+    <li class="page-item {% if stage == 'ЗЭ' %} active{% endif %}"><a class="page-link" href="?stage=ЗЭ&page={{ show_solved.number }}&part={{ part }}">ЗЭ</a></li>
+    <li class="page-item {% if stage == 'others' %} active{% endif %}"><a class="page-link" href="?stage=others&page={{ show_solved.number }}&part={{ part }}">Другие олимпиады</a></li>
+  </ul>
+</nav>
+
+<h5>После выбора части перейдите к разделу или ко всем вопросам, чтобы решать вопросы данной части</h5>
+
+
+    <h3>Статистика по решенным вопросам:</h3>
+     <h5>
+         <table class="table table-borderless" style="width:35%">
+             <tr>
+                <th>Всего решено вопросов: </th>
+                <th>{{ st.n }}</th>
+             </tr>
+             <tr>
+                 <th>Из них 1-й части ВсОШ: </th>
+                 <th>{{ st.n1 }}</th>
+             </tr>
+             <tr>
+                 <th>Из них 2-й части ВсОШ: </th>
+                 <th>{{ st.n2 }}</th>
+
+             </tr>
+             <tr>
+                 <th>Выполнение 1-й части: </th>
+                 <th>{{ st.p1 }}</th>
+             </tr>
+             <tr>
+                 <th>Выполнение 2-й части: </th>
+                 <th>{{ st.p2 }}</th>
+             </tr>
+
+         </table>
+
+     </h5>
+
+    <h3>Решать вопросы по разделам:</h3>
+    <table class="table table-sm table-striped table-borderless" style="width:40%">
+        {% for el in tags %}
+        <tr>
+        <th><a href="{{ el.0.get_absolute_url }}solve?part={{part}}&stage={{ stage }}">{{el.0.name}}</a></th> <th>{{ el.1 }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+<h3>Список решенных вопросов</h3>
+    <div class="alert alert-primary">
+
+    {% for el in show_solved %}
+            <h3>{{ el.0.stage }} {{ el.0.year }} {{ el.0.grade }}</h3>
+            <h5>{{ el.0.part }}-{{ el.0.number }}</h5>
+            <p>{{ el.0.text|linebreaksbr }}</p>
+            <p>
+                Раздел:
+                {% for tag in el.0.tags.all %}
+                <a href="{{ tag.get_absolute_url }}">{{tag.name}}</a>
+                {% endfor %}
+                <br>
+                Темы:{% for x in el.0.Tag1.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag2.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag3.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag4.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag5.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag6.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag7.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag8.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag9.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag10.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+                    {% for x in el.0.Tag11.all %} <a href="{% url 'testing' %}?topic={{x.name|urlencode}}">{{x.name}}</a>{% endfor %}
+            </p>
+            {% if el.0.image %}
+                <img src="{{ el.0.image.url }}" class="img-fluid" alt="Responsive image">
+            {% endif %}
+        <p>
+        Ответ: {{ el.0.answer }}<br>
+        Ваш ответ: {{ el.1.user_answer }}<br>
+        </p>
+                {% if el.0.comment %}
+                <p>
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#y{{ el.0.id }}" aria-expanded="false" aria-controls="y{{ el.0.id }}">
+                    Показать разбор
+                  </button>
+                </p>
+                <div class="collapse" id="y{{ el.0.id }}">
+                  <div class="card card-body">
+                     {{ el.0.comment }}<br>
+                     {% if el.0.imageA %}
+                        <img src="{{ el.0.imageA.url }}" class="rounded mx-auto d-block" >
+                     {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+        <br>
+    {% endfor %}
+
+    </div>
+
+{% if is_paginated %}
+<nav aria-label="...">
+  <ul class="pagination">
+
+    <li class="page-item {% if not prev_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ prev_url }}&part={{ part }}" tabindex="-1">Предыдущая</a>
+    </li>
+
+    {% for n in show_solved.paginator.page_range %}
+
+        {% if show_solved.number == n %}
+                <li class="page-item active">
+                    <a class="page-link" href="?page={{ n }}&part={{ part }}">{{ n }}<span class="sr-only">(current)</span></a>
+                </li>
+
+        {% elif n > show_solved.number|add:-3 and n < show_solved.number|add:3 %}
+            <li class="page-item"><a class="page-link" href="?page={{ n }}&part={{ part }}">{{ n }}</a></li>
+
+        {%endif%}
+
+    {% endfor %}
+
+    <li class="page-item {% if not next_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ next_url }}&part={{ part }}" tabindex="-1">Следующая</a>
+    </li>
+
+  </ul>
+</nav>
+{% endif %}
+
+</div>
+
+
+
+{% endblock %}
